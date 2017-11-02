@@ -1,7 +1,9 @@
 ----------------
 Test description
 ----------------
-We value the ability to model problems in software, so our first assessment will be around that subject. The exercise is to model and code a simple supermarket pricing solution. It is inspired on PragDave Supermaket Kata - http://codekata.com/kata/kata01-supermarket-pricing/.
+We value the ability to model problems in software, so our first assessment will be around that subject. The exercise is 
+to model and code a simple supermarket pricing solution.
+It is inspired on PragDave Supermaket Kata - http://codekata.com/kata/kata01-supermarket-pricing/.
 
 Focus on how to price a supermarket shopping basket and in particular on how to calculate more complex prices such as
 - Three cans of beans for the price of two.
@@ -47,8 +49,8 @@ protected when changes come later.
 You can use any architectural pattern, 
 eg. Uncle bob's clean architecture, or ports and adapters, or onion, or another of your choice.
 
-Please put the code in a github (it’s free), add me as a contributor (dominicfarr), and commit often, so 
+Please put the code in a github (it's free), add me as a contributor (dominicfarr), and commit often, so 
 we can see how you grow your code.
 
-Add a readme file and jot down what assumptions, design decisions and compromises you’ve taken. 
+Add a readme file and jot down what assumptions, design decisions and compromises you've taken. 
 
