@@ -1,8 +1,10 @@
-package cfs.supermarketpricing.sku;
+package cfs.supermarketpricing.catalog;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import cfs.supermarketpricing.sku.StockKeepingUnit;
 
 /**
  * SimpleCatalog

@@ -16,6 +16,14 @@ import cfs.supermarketpricing.money.MonetaryAmount;
  *   A stock keeping unit (SKU) does not need to be assigned to physical products in inventory.
  */
 public interface StockKeepingUnit {
+	
+	/**
+	 * getDescription
+	 * 
+	 * User-friendly description e.g. Beans 300g tin
+	 */
+	public String getDescription();
+	
 	/**
 	 * getPrice
 	 * 

@@ -13,4 +13,12 @@ package cfs.supermarketpricing.money;
  */
 public interface MonetaryAmount {
 
+	/**
+	 * plus
+	 * 
+	 * Add two amounts together and return a new result
+	 * Does not modify the current instance as we're immutable
+	 */
+	MonetaryAmount plus(MonetaryAmount amount);
+
 }
