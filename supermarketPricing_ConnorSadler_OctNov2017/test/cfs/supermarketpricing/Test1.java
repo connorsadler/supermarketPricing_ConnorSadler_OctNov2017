@@ -1,4 +1,4 @@
-package connorsadler.supermarketpricing;
+package cfs.supermarketpricing;
 
 import static org.junit.Assert.*;
 
