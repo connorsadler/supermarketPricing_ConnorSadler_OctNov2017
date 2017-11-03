@@ -48,7 +48,7 @@ public class CheckoutTest {
 		
 		// Assertions
 		assertThat("Check sub total", result.getSubTotal(), is(SterlingFactory.createPoundsAmount(3, 30)));
-		// cfstodo: Discounts/offers
+		// cfstodo: This will be incorrect until I implement Discounts/offers
 		assertThat("Check total to pay", result.getTotalToPay(), is(SterlingFactory.createPoundsAmount(2, 40)));
 	}
 

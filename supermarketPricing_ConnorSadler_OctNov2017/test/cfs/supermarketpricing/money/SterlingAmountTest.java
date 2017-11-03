@@ -71,6 +71,8 @@ public class SterlingAmountTest {
 		// x decimal > 1
 		assertThat(SterlingFactory.createPoundsAmount(1,  45).times(3.5d),
 				is(SterlingFactory.createPoundsAmount(5,   8))); // 5.075 -> rounded up
+		assertThat(SterlingFactory.createPoundsAmount(1,  99).times(0.2d),
+				is(SterlingFactory.createPoundsAmount(0,  40)));
 		// x decimal < 1
 		assertThat(SterlingFactory.createPoundsAmount(1,  45).times(0.2d),
 				is(SterlingFactory.createPoundsAmount(0,  29)));
@@ -81,7 +83,7 @@ public class SterlingAmountTest {
 		assertThat(SterlingFactory.createPoundsAmount(0,  99).times(0.3d),
 				is(SterlingFactory.createPoundsAmount(0,  30))); // 29.7 -> rounds up
 		assertThat(SterlingFactory.createPoundsAmount(0,  98).times(0.3d),
-				is(SterlingFactory.createPoundsAmount(0,  30))); // 29.4 -> rounds down
+				is(SterlingFactory.createPoundsAmount(0,  29))); // 29.4 -> rounds down
 	}
 		
 }
