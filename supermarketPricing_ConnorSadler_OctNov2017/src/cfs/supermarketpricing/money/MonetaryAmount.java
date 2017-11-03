@@ -21,4 +21,11 @@ public interface MonetaryAmount {
 	 */
 	MonetaryAmount plus(MonetaryAmount amount);
 
+	/**
+	 * times
+	 * 
+	 * Multiply this amount of money by a floating point number
+	 */
+	MonetaryAmount times(double d);
+
 }

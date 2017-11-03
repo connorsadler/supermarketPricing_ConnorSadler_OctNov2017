@@ -17,14 +17,16 @@ import cfs.supermarketpricing.sku.StockKeepingUnit;
 public class CheckoutTest {
 	// Fixtures
 	private StockKeepingUnit beans300gTin;
+	private SimpleStockKeepingUnit cokeCan;
 	private StockKeepingUnit orangesPerKilo;
 
 	@Before
 	public void setUp() {
 		// Initial Setup
 		beans300gTin = new SimpleStockKeepingUnit("Beans 300g tin", SterlingFactory.createPoundsAmount(0, 50));
+		cokeCan = new SimpleStockKeepingUnit("Coke Can", SterlingFactory.createPoundsAmount(0, 70));
 		// cfstodo: "Oranges per kilo" has a price per weight rather than a price per item like beans
-		orangesPerKilo = new SimpleStockKeepingUnit("Oranges per kilo", SterlingFactory.createPoundsAmount(0, 20));
+		orangesPerKilo = new SimpleStockKeepingUnit("Oranges per kilo", SterlingFactory.createPoundsAmount(1, 99));
 	}
 
 	/**
@@ -32,18 +34,21 @@ public class CheckoutTest {
 	 */
 	@Test
 	public void testCheckout1() {
-		
 		// Create our basket of items
 		ShoppingBasket shoppingBasket = new SimpleShoppingBasket();
 		shoppingBasket.addItem(new SimpleShoppingBasketItem(beans300gTin));
 		shoppingBasket.addItem(new SimpleShoppingBasketItem(beans300gTin));
+		shoppingBasket.addItem(new SimpleShoppingBasketItem(beans300gTin));
+		shoppingBasket.addItem(new SimpleShoppingBasketItem(cokeCan));
+		shoppingBasket.addItem(new SimpleShoppingBasketItem(cokeCan));
 		shoppingBasket.addItem(new SimpleShoppingBasketItemWithWeight(orangesPerKilo, 0.2f));
 		
 		// Perform a checkout
 		CheckoutResult result = new CheckoutCalculator(shoppingBasket).executeCheckout();
 		
-		// cfstodo: Assertions
+		// Assertions
 		assertThat("Check sub total", result.getSubTotal(), is(SterlingFactory.createPoundsAmount(3, 30)));
+		// cfstodo: Discounts/offers
 		assertThat("Check total to pay", result.getTotalToPay(), is(SterlingFactory.createPoundsAmount(2, 40)));
 	}
 

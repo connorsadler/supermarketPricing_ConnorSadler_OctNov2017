@@ -1,5 +1,7 @@
 package cfs.supermarketpricing.money;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
@@ -79,6 +81,31 @@ public class SterlingAmount implements MonetaryAmount {
 			newPounds++;
 			newPence -= 100;
 		}
+		return new SterlingAmount(newPounds, newPence);
+	}
+
+	private static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
+	
+	/**
+	 * @see cfs.supermarketpricing.money.MonetaryAmount#times(double)
+	 */
+	@Override
+	public MonetaryAmount times(double d) {
+		// Conv to BigDecimal
+		BigDecimal value = new BigDecimal(pounds);
+		BigDecimal penceBD = BigDecimal.valueOf(pence).divide(ONE_HUNDRED);
+		value = value.add(penceBD);
+		// Calc
+		BigDecimal result = value.multiply(BigDecimal.valueOf(d));
+		// cfstodo: Round to nearest penny
+		result = result.setScale(2, RoundingMode.HALF_UP);
+		
+		// Conv back from BigDecimal
+		BigDecimal fractionalPart = result.remainder( BigDecimal.ONE );
+		BigDecimal integerPart = result.subtract(fractionalPart);
+		
+		long newPounds = integerPart.longValue();
+		long newPence = fractionalPart.multiply(ONE_HUNDRED).longValue();
 		return new SterlingAmount(newPounds, newPence);
 	}
 	

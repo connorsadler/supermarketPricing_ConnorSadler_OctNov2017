@@ -1,5 +1,6 @@
 package cfs.supermarketpricing.basket;
 
+import cfs.supermarketpricing.money.MonetaryAmount;
 import cfs.supermarketpricing.sku.StockKeepingUnit;
 
 /**
@@ -23,4 +24,12 @@ public class SimpleShoppingBasketItem implements ShoppingBasketItem {
 		return stockKeepingUnit;
 	}
 
+	/**
+	 * @see cfs.supermarketpricing.basket.ShoppingBasketItem#calcAmount()
+	 */
+	@Override
+	public MonetaryAmount calcAmount() {
+		// cfstodo: Do this properly for SKUs which require a weight!
+		return stockKeepingUnit.getPrice();
+	}
 }

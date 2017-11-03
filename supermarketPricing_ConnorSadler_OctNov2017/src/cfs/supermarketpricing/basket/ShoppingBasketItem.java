@@ -1,5 +1,6 @@
 package cfs.supermarketpricing.basket;
 
+import cfs.supermarketpricing.money.MonetaryAmount;
 import cfs.supermarketpricing.sku.StockKeepingUnit;
 
 /**
@@ -24,4 +25,11 @@ public interface ShoppingBasketItem {
 	 * Which SKU we're buying for this item
 	 */
 	public StockKeepingUnit getStockKeepingUnit();
+
+	/**
+	 * calcAmount
+	 * 
+	 * Calculate the amount to add to the final bill for this item
+	 */
+	public MonetaryAmount calcAmount();
 }

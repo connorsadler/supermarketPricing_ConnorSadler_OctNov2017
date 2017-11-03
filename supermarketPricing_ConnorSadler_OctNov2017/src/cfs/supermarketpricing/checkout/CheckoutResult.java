@@ -9,13 +9,16 @@ import cfs.supermarketpricing.money.MonetaryAmount;
  */
 public class CheckoutResult {
 
-	private MonetaryAmount subtotal;
+	private final MonetaryAmount subtotal;
+	// Final total after discounts applied
+	private final MonetaryAmount totalToPay;
 
 	/**
 	 * Constructor
 	 */
-	public CheckoutResult(MonetaryAmount subtotal) {
+	public CheckoutResult(MonetaryAmount subtotal, MonetaryAmount totalToPay) {
 		this.subtotal = subtotal;
+		this.totalToPay = totalToPay;
 	}
 
 	/**
@@ -28,9 +31,8 @@ public class CheckoutResult {
 	/**
 	 * getTotalToPay
 	 */
-	public Object getTotalToPay() {
-		// TODO Auto-generated method stub
-		return null;
+	public MonetaryAmount getTotalToPay() {
+		return totalToPay;
 	}
 
 }

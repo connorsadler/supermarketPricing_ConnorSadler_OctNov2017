@@ -1,5 +1,6 @@
 package cfs.supermarketpricing.basket;
 
+import cfs.supermarketpricing.money.MonetaryAmount;
 import cfs.supermarketpricing.sku.StockKeepingUnit;
 
 /**
@@ -27,6 +28,17 @@ public class SimpleShoppingBasketItemWithWeight extends SimpleShoppingBasketItem
 	@Override
 	public double getWeight() {
 		return weight;
+	}
+	
+	/**
+	 * @see cfs.supermarketpricing.basket.SimpleShoppingBasketItem#calcAmount()
+	 */
+	@Override
+	public MonetaryAmount calcAmount() {
+		// For an item with a weight, we multiply the base price by the weight
+		// e.g. Oranges 0.200 kg @  £1.99/kg = £ 0.40
+		MonetaryAmount basePrice = getStockKeepingUnit().getPrice();
+		return basePrice.times(weight);
 	}
 
 

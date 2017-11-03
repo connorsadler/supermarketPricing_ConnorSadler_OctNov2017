@@ -16,10 +16,8 @@ Please bear with me!
 
 
 
-
-
 Catalog
-- cfstodo: notes
+- cfstodo: notes - not sure if I need this yet
 
 ShoppingBasket/ShoppingBasketItem
 - I kept this simple so that if you want to buy multiple tins of beans you'll add more than one
@@ -29,8 +27,8 @@ ShoppingBasket/ShoppingBasketItem
 MonetaryAmount
 - In reality this may be linked to some sort of monetary system e.g. Sterling
 
-Pricing Calc
-- cfstodo: notes
+Pricing Calculation
+- Done in CheckoutCalculator, please see comments in that class
 
 Offers
 - cfstodo: notes

@@ -49,4 +49,39 @@ public class SterlingAmountTest {
 		assertThat(SterlingFactory.createPoundsAmount(1, 99).plus(SterlingFactory.createPoundsAmount(1, 99)),
 				is(SterlingFactory.createPoundsAmount(3, 98)));
 	}
+	
+	/**
+	 * testTimes
+	 * 
+	 * Simple test of SterlingAmount times
+	 */
+	@Test
+	public void testTimes() {
+		// x 0
+		assertThat(SterlingFactory.createPoundsAmount(0,  0).times(0.0d),
+				is(SterlingFactory.createPoundsAmount(0,  0)));
+		assertThat(SterlingFactory.createPoundsAmount(2,  34).times(0.0d),
+				is(SterlingFactory.createPoundsAmount(0,  0)));
+		// x 1
+		assertThat(SterlingFactory.createPoundsAmount(0,  0).times(1.0d),
+				is(SterlingFactory.createPoundsAmount(0,  0)));
+		assertThat(SterlingFactory.createPoundsAmount(1,  45).times(1.0d),
+				is(SterlingFactory.createPoundsAmount(1,  45)));
+		
+		// x decimal > 1
+		assertThat(SterlingFactory.createPoundsAmount(1,  45).times(3.5d),
+				is(SterlingFactory.createPoundsAmount(5,   8))); // 5.075 -> rounded up
+		// x decimal < 1
+		assertThat(SterlingFactory.createPoundsAmount(1,  45).times(0.2d),
+				is(SterlingFactory.createPoundsAmount(0,  29)));
+		
+		// Test rounding
+		assertThat(SterlingFactory.createPoundsAmount(1,  00).times(0.3d),
+				is(SterlingFactory.createPoundsAmount(0,  30))); // 0.30
+		assertThat(SterlingFactory.createPoundsAmount(0,  99).times(0.3d),
+				is(SterlingFactory.createPoundsAmount(0,  30))); // 29.7 -> rounds up
+		assertThat(SterlingFactory.createPoundsAmount(0,  98).times(0.3d),
+				is(SterlingFactory.createPoundsAmount(0,  30))); // 29.4 -> rounds down
+	}
+		
 }
