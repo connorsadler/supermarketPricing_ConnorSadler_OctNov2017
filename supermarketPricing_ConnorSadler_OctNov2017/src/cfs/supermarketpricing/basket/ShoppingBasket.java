@@ -2,6 +2,9 @@ package cfs.supermarketpricing.basket;
 
 import java.util.List;
 
+import cfs.supermarketpricing.money.MonetaryAmount;
+import cfs.supermarketpricing.money.MoneySystem;
+
 /**
  * ShoppingBasket
  * 
@@ -10,6 +13,15 @@ import java.util.List;
  * @author Connor
  */
 public interface ShoppingBasket {
+
+	/**
+	 * getMoneySystem
+	 * 
+	 * The MoneySystem this basket uses
+	 * If items in a different currency are added, currently an exception is thrown
+	 * This avoids any currency conversion - this could be changed in future to allow this
+	 */
+	public MoneySystem<? extends MonetaryAmount> getMoneySystem();
 
 	/**
 	 * getItems
@@ -22,6 +34,7 @@ public interface ShoppingBasket {
 	 * addItem
 	 * 
 	 * Adds a item to the basket
+	 * Must check MoneySystem used by the item
 	 */
 	public void addItem(ShoppingBasketItem item);
 	

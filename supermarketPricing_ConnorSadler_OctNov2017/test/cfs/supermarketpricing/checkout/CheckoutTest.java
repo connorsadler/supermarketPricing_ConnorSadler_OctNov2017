@@ -1,8 +1,8 @@
 package cfs.supermarketpricing.checkout;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import static org.hamcrest.CoreMatchers.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,12 +10,17 @@ import cfs.supermarketpricing.basket.ShoppingBasket;
 import cfs.supermarketpricing.basket.SimpleShoppingBasket;
 import cfs.supermarketpricing.basket.SimpleShoppingBasketItem;
 import cfs.supermarketpricing.basket.SimpleShoppingBasketItemWithWeight;
-import cfs.supermarketpricing.money.SterlingFactory;
+import cfs.supermarketpricing.money.MoneySystem;
+import cfs.supermarketpricing.money.SterlingAmount;
+import cfs.supermarketpricing.money.SterlingMoneySystem;
 import cfs.supermarketpricing.sku.SimpleStockKeepingUnit;
 import cfs.supermarketpricing.sku.StockKeepingUnit;
 
 public class CheckoutTest {
 	// Fixtures
+	// We're going to work in Sterling for this test
+	private final MoneySystem<SterlingAmount> sterling = new SterlingMoneySystem();
+	// Our types of item
 	private StockKeepingUnit beans300gTin;
 	private SimpleStockKeepingUnit cokeCan;
 	private StockKeepingUnit orangesPerKilo;
@@ -23,10 +28,10 @@ public class CheckoutTest {
 	@Before
 	public void setUp() {
 		// Initial Setup
-		beans300gTin = new SimpleStockKeepingUnit("Beans 300g tin", SterlingFactory.createPoundsAmount(0, 50));
-		cokeCan = new SimpleStockKeepingUnit("Coke Can", SterlingFactory.createPoundsAmount(0, 70));
-		// cfstodo: "Oranges per kilo" has a price per weight rather than a price per item like beans
-		orangesPerKilo = new SimpleStockKeepingUnit("Oranges per kilo", SterlingFactory.createPoundsAmount(1, 99));
+		beans300gTin = new SimpleStockKeepingUnit("Beans 300g tin", sterling.createFromString("0.50"));
+		cokeCan = new SimpleStockKeepingUnit("Coke Can", sterling.createFromString("0.70"));
+		// Note: "Oranges per kilo" has a price per weight rather than a price per item like beans
+		orangesPerKilo = new SimpleStockKeepingUnit("Oranges per kilo", sterling.createFromString("1.99"));
 	}
 
 	/**
@@ -35,7 +40,7 @@ public class CheckoutTest {
 	@Test
 	public void testCheckout1() {
 		// Create our basket of items
-		ShoppingBasket shoppingBasket = new SimpleShoppingBasket();
+		ShoppingBasket shoppingBasket = new SimpleShoppingBasket(sterling);
 		shoppingBasket.addItem(new SimpleShoppingBasketItem(beans300gTin));
 		shoppingBasket.addItem(new SimpleShoppingBasketItem(beans300gTin));
 		shoppingBasket.addItem(new SimpleShoppingBasketItem(beans300gTin));
@@ -47,9 +52,9 @@ public class CheckoutTest {
 		CheckoutResult result = new CheckoutCalculator(shoppingBasket).executeCheckout();
 		
 		// Assertions
-		assertThat("Check sub total", result.getSubTotal(), is(SterlingFactory.createPoundsAmount(3, 30)));
+		assertThat("Check sub total", result.getSubTotal(), is(sterling.createFromString("3.30")));
 		// cfstodo: This will be incorrect until I implement Discounts/offers
-		assertThat("Check total to pay", result.getTotalToPay(), is(SterlingFactory.createPoundsAmount(2, 40)));
+		assertThat("Check total to pay", result.getTotalToPay(), is(sterling.createFromString("2.40")));
 	}
 
 }

@@ -10,15 +10,19 @@ import java.util.Objects;
  * I have used separate long values for pounds/pence for accuracy - we don't want to use a floating
  * point value as they are inaccurate
  * I could use BigDecimal instead but pounds + pence is OK for now.
- * cfstodo: I may use BigDecimal for the calculations to make things a bit easier.
+ * NOTE: I have used BigDecimal for the calculations to make things a bit easier.
  * 
  * See further comments in MonetaryAmount
  */
 public class SterlingAmount implements MonetaryAmount {
-
+	private static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
+	
 	private final long pounds;
 	private final long pence;
 	
+	/**
+	 * Constructor
+	 */
 	public SterlingAmount(long pounds, long pence) {
 		this.pounds = pounds;
 		this.pence = pence;
@@ -27,7 +31,18 @@ public class SterlingAmount implements MonetaryAmount {
 			throw new IllegalArgumentException("Pence must be less than 100, but we were given: " + pence);
 		}
 	}
-
+	
+	/**
+	 * createFromBigDecimal
+	 */
+	public static SterlingAmount createFromBigDecimal(BigDecimal bd) {
+		BigDecimal fractionalPart = bd.remainder(BigDecimal.ONE);
+		BigDecimal integerPart = bd.subtract(fractionalPart);
+		long newPounds = integerPart.longValue();
+		long newPence = fractionalPart.multiply(ONE_HUNDRED).longValue();
+		return new SterlingAmount(newPounds, newPence);
+	}
+	
 	public long getPounds() {
 		return pounds;
 	}
@@ -83,32 +98,35 @@ public class SterlingAmount implements MonetaryAmount {
 		}
 		return new SterlingAmount(newPounds, newPence);
 	}
-
-	private static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
 	
+	/**
+	 * toBigDecimal
+	 * 
+	 * Conv to BigDecimal
+	 */
+	BigDecimal toBigDecimal() {
+		BigDecimal value = new BigDecimal(pounds);
+		BigDecimal penceBD = BigDecimal.valueOf(pence).divide(ONE_HUNDRED);
+		value = value.add(penceBD);
+		return value;
+	}
+
 	/**
 	 * @see cfs.supermarketpricing.money.MonetaryAmount#times(double)
 	 */
 	@Override
 	public MonetaryAmount times(double d) {
-		// Conv to BigDecimal
-		BigDecimal value = new BigDecimal(pounds);
-		BigDecimal penceBD = BigDecimal.valueOf(pence).divide(ONE_HUNDRED);
-		value = value.add(penceBD);
+		// Convert into BigDecimal
+		BigDecimal value = toBigDecimal();
+		
 		// Calc
 		BigDecimal result = value.multiply(BigDecimal.valueOf(d));
-		// cfstodo: Round to nearest penny
+		// Round to nearest penny
 		result = result.setScale(2, RoundingMode.HALF_UP);
 		
 		// Conv back from BigDecimal
-		BigDecimal fractionalPart = result.remainder( BigDecimal.ONE );
-		BigDecimal integerPart = result.subtract(fractionalPart);
-		
-		long newPounds = integerPart.longValue();
-		long newPence = fractionalPart.multiply(ONE_HUNDRED).longValue();
-		return new SterlingAmount(newPounds, newPence);
+		return createFromBigDecimal(result);
 	}
-	
-	
+
 	
 }

@@ -1,11 +1,12 @@
 package cfs.supermarketpricing.checkout;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import cfs.supermarketpricing.basket.ShoppingBasket;
 import cfs.supermarketpricing.basket.ShoppingBasketItem;
 import cfs.supermarketpricing.money.MonetaryAmount;
-import cfs.supermarketpricing.money.SterlingFactory;
+import cfs.supermarketpricing.money.MoneySystem;
 
 /**
  * CheckoutCalculator
@@ -28,10 +29,11 @@ public class CheckoutCalculator {
 	 * executeCheckout
 	 */
 	public CheckoutResult executeCheckout() {
-		
-		// cfstodo: This class shouldn't work only for "Sterling", it should work for any currency
-		//          We would probably need to inject some sort of "monetary system" somewhere
-		MonetaryAmount subtotal = SterlingFactory.createPoundsAmount(0, 0);
+		// We use the same MoneySystem (currency) as the basket
+		MoneySystem<? extends MonetaryAmount> moneySystem = shoppingBasket.getMoneySystem();
+
+		// Start with a zero subtotal
+		MonetaryAmount subtotal = moneySystem.createFromBigDecimal(new BigDecimal("0"));
 		
 		// Calculate the sub total by adding up all items
 		List<ShoppingBasketItem> items = shoppingBasket.getItems();
