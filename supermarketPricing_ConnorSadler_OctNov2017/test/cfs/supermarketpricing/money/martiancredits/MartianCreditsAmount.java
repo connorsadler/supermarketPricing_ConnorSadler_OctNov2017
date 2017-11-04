@@ -37,6 +37,14 @@ public class MartianCreditsAmount implements MonetaryAmount {
 	public MonetaryAmount plus(MonetaryAmount amount) {
 		throw new UnsupportedOperationException("Not supported");
 	}
+	
+	/**
+	 * @see cfs.supermarketpricing.money.MonetaryAmount#minus(cfs.supermarketpricing.money.MonetaryAmount)
+	 */
+	@Override
+	public MonetaryAmount minus(MonetaryAmount amount) {
+		throw new UnsupportedOperationException("Not supported");
+	}
 
 	/**
 	 * @see cfs.supermarketpricing.money.MonetaryAmount#times(double)

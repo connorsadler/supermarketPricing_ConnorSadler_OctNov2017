@@ -55,7 +55,7 @@ public class SimpleShoppingBasketTest {
 			//e.printStackTrace();
 			assertThat("Check for expected exception", 
 					e.getMessage(), 
-					is("Mismatching money system: Basket: MartianCreditsMoneySystem vs Item SKU Price: SterlingAmount [pounds=0, pence=50]"));
+					is("Mismatching money system: Basket: MartianCreditsMoneySystem vs Item SKU Price: SterlingAmount [pence=50]"));
 		}
 	}
 }

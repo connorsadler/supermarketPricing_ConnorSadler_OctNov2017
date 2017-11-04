@@ -2,6 +2,7 @@ package cfs.supermarketpricing.money;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 
@@ -62,6 +63,38 @@ public class SterlingAmountTest {
 		assertThat(new SterlingAmount(1,  56).plus(new SterlingAmount(0, -90)),
 				is(new SterlingAmount(0,  66)));
 	}
+	
+	/**
+	 * testMinus
+	 * 
+	 * Simple test of SterlingAmount minus
+	 */
+	@Test
+	public void testMinus() {
+		// Test zeros
+		assertThat(new SterlingAmount(0,  0).minus(new SterlingAmount(0,  0)),
+				is(new SterlingAmount(0,  0)));
+		assertThat(new SterlingAmount(1,  0).minus(new SterlingAmount(0,  0)),
+				is(new SterlingAmount(1,  0)));
+		assertThat(new SterlingAmount(2,  13).minus(new SterlingAmount(0,  0)),
+				is(new SterlingAmount(2,  13)));
+		assertThat(new SterlingAmount(1,  56).minus(new SterlingAmount(0,  0)),
+				is(new SterlingAmount(1,  56)));
+		assertThat(new SterlingAmount(0,   0).minus(new SterlingAmount(1, 41)),
+				is(new SterlingAmount(0, -141)));
+
+		// Test non zeros
+		assertThat(new SterlingAmount(3,  50).minus(new SterlingAmount(11, 41)),
+				is(new SterlingAmount(0, -791)));
+		
+		// Overflow pence > 100, which overflows into another pound
+		assertThat(new SterlingAmount(1, 99).minus(new SterlingAmount(1, 99)),
+				is(new SterlingAmount(0,  0)));
+		
+		// Test negative amount subtracted
+		assertThat(new SterlingAmount(1,  56).minus(new SterlingAmount(0, -90)),
+				is(new SterlingAmount(2,  46)));
+	}
 
 	/**
 	 * testCreateFromBigDecimal
@@ -74,6 +107,28 @@ public class SterlingAmountTest {
 				is(new SterlingAmount( 1,  0)));
 		assertThat(sterling.createFromBigDecimal(new BigDecimal("11.23")),
 				is(new SterlingAmount(11, 23)));
+		assertThat(sterling.createFromBigDecimal(new BigDecimal("-11.23")),
+				is(new SterlingAmount(0, -1123)));
+	}
+	
+	/**
+	 * testCreateFromString
+	 */
+	@Test
+	public void testCreateFromString() {
+		assertThat(sterling.createFromString("0"),
+				is(new SterlingAmount( 0,  0)));
+		assertThat(sterling.createFromString("1"),
+				is(new SterlingAmount( 1,  0)));
+		assertThat(sterling.createFromString("11.23"),
+				is(new SterlingAmount(11, 23)));
+		assertThat(sterling.createFromString("-11.23"),
+				is(new SterlingAmount(0, -1123)));
+		
+		assertThat(sterling.createFromString("-11.23"),
+				is(new SterlingAmount(-11, -23)) // This is an alternate way to declare a negative amount
+				);
+
 	}
 	
 	/**
@@ -87,6 +142,19 @@ public class SterlingAmountTest {
 				is(new BigDecimal("1")));
 		assertThat(new SterlingAmount(11, 23).toBigDecimal(),
 				is(new BigDecimal("11.23")));
+		assertThat(new SterlingAmount(0, -1123).toBigDecimal(),
+				is(new BigDecimal("-11.23")));
+		
+		// Test invalid construction
+		try {
+			new SterlingAmount(-1, 23);
+			fail("Test should fail but didn't");
+		} catch (Exception e) {
+			//e.printStackTrace();
+			assertThat("Check for expected exception", 
+					e.getMessage(), 
+					is("Bad call of SterlingAmount constructor: -1, 23. Pounds and pence sign must match."));
+		}
 		
 	}
 	

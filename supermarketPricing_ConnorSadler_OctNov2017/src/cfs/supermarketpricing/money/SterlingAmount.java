@@ -7,29 +7,31 @@ import java.util.Objects;
 /**
  * An immutable amount in pounds + pence
  * 
- * I have used separate long values for pounds/pence for accuracy - we don't want to use a floating
+ * I have used separate a single long pence value for accuracy - we don't want to use a floating
  * point value as they are inaccurate
- * I could use BigDecimal instead but pounds + pence is OK for now.
+ * I could use BigDecimal instead but pence is OK for now.
  * NOTE: I have used BigDecimal for the calculations to make things a bit easier.
  * 
  * See further comments in MonetaryAmount
  */
 public class SterlingAmount implements MonetaryAmount {
 	private static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
-	
-	private final long pounds;
+	// Store all pounds and pence in the single long value
+	// Makes calcs easy and makes representing a -ve number easy
+	// e.g. £1.50 = 150 pence
 	private final long pence;
 	
 	/**
 	 * Constructor
 	 */
 	public SterlingAmount(long pounds, long pence) {
-		this.pounds = pounds;
-		this.pence = pence;
-		
-		if (pence > 100) {
-			throw new IllegalArgumentException("Pence must be less than 100, but we were given: " + pence);
+		// It can get confusing if we allow construction with (for example) £-1 + 40 pence => that would equal £-0.60
+		if ((pounds < 0 && pence > 0) || (pounds > 0 && pence < 0)) {
+			throw new IllegalArgumentException("Bad call of SterlingAmount constructor: " + pounds + ", " + pence + ". Pounds and pence sign must match.");
 		}
+		
+		// Simply store as whole pence - makes calcs easy and makes representing a -ve number easy
+		this.pence = 100 * pounds + pence;
 	}
 	
 	/**
@@ -43,22 +45,14 @@ public class SterlingAmount implements MonetaryAmount {
 		return new SterlingAmount(newPounds, newPence);
 	}
 	
-	public long getPounds() {
-		return pounds;
-	}
-
-	public long getPence() {
-		return pence;
-	}
-
 	@Override
 	public String toString() {
-		return "SterlingAmount [pounds=" + pounds + ", pence=" + pence + "]";
+		return "SterlingAmount [pence=" + pence + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(pounds, pence);
+		return Objects.hash(pence);
 	}
 
 	@Override
@@ -71,8 +65,6 @@ public class SterlingAmount implements MonetaryAmount {
 			return false;
 		SterlingAmount other = (SterlingAmount) obj;
 		if (pence != other.pence)
-			return false;
-		if (pounds != other.pounds)
 			return false;
 		return true;
 	}
@@ -90,17 +82,24 @@ public class SterlingAmount implements MonetaryAmount {
 		}
 		SterlingAmount otherSterlingAmount = (SterlingAmount) amount;
 		
-		long newPounds = this.pounds + otherSterlingAmount.getPounds();
-		long newPence = this.pence + otherSterlingAmount.getPence();
-		if (newPence > 100) {
-			newPounds++;
-			newPence -= 100;
+		long newPence = this.pence + otherSterlingAmount.pence;
+		return new SterlingAmount(0, newPence);
+	}
+	
+	/**
+	 * @see cfs.supermarketpricing.money.MonetaryAmount#minus(cfs.supermarketpricing.money.MonetaryAmount)
+	 */
+	@Override
+	public MonetaryAmount minus(MonetaryAmount amount) {
+		// For the moment we assume only SterlingAmounts can be subtracted together
+		// cfstodo: Check for a better way to declare this method
+		if (!(amount instanceof SterlingAmount)) {
+			throw new IllegalArgumentException("Only a SterlingAmount can be subtracted from a SterlingAmount, but we were given: " + amount);
 		}
-		if (newPence < 0) {
-			newPounds--;
-			newPence += 100;
-		}
-		return new SterlingAmount(newPounds, newPence);
+		SterlingAmount otherSterlingAmount = (SterlingAmount) amount;
+		
+		long newPence = this.pence - otherSterlingAmount.pence;
+		return new SterlingAmount(0, newPence);
 	}
 	
 	/**
@@ -109,10 +108,7 @@ public class SterlingAmount implements MonetaryAmount {
 	 * Conv to BigDecimal
 	 */
 	BigDecimal toBigDecimal() {
-		BigDecimal value = new BigDecimal(pounds);
-		BigDecimal penceBD = BigDecimal.valueOf(pence).divide(ONE_HUNDRED);
-		value = value.add(penceBD);
-		return value;
+		return BigDecimal.valueOf(pence).divide(ONE_HUNDRED);
 	}
 
 	/**

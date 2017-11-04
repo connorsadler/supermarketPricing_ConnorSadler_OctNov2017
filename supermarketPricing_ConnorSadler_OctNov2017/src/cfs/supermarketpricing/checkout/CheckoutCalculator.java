@@ -36,20 +36,16 @@ public class CheckoutCalculator {
 		// We use the same MoneySystem (currency) as the basket
 		MoneySystem<? extends MonetaryAmount> moneySystem = shoppingBasket.getMoneySystem();
 
-		// Start with a zero subtotal
-		MonetaryAmount subtotal = moneySystem.createFromBigDecimal(new BigDecimal("0"));
-		
 		// Calculate the sub total by adding up all items
+		MonetaryAmount subtotal = moneySystem.createFromBigDecimal(new BigDecimal("0"));
 		List<ShoppingBasketItem> items = shoppingBasket.getItems();
 		for (ShoppingBasketItem shoppingBasketItem : items) {
 			MonetaryAmount lineAmount = shoppingBasketItem.calcAmount();
 			subtotal = subtotal.plus(lineAmount);
 		}
-				
-		// cfstodo: Apply any offers/discounts
+
+		// Apply any offers/discounts
 		DiscountsCalculationResult discountsCalculationResult = discountCalculator.executeDiscountsCalculation(shoppingBasket);
-		//          We need to work out from the basket which offers are applicable, then apply them
-		//          The applied offers need to be stored in the result
 		MonetaryAmount totalToPay = subtotal.plus(discountsCalculationResult.getDiscountTotal());
 		
 		// Create result

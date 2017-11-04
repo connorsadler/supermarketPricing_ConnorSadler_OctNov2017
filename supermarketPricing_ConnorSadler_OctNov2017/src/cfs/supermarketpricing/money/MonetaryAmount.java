@@ -22,10 +22,19 @@ public interface MonetaryAmount {
 	MonetaryAmount plus(MonetaryAmount amount);
 
 	/**
+	 * minus
+	 * 
+	 * Subtracts amount from the current value and return a new result
+	 * Does not modify the current instance as we're immutable
+	 */
+	MonetaryAmount minus(MonetaryAmount amount);
+
+	/**
 	 * times
 	 * 
 	 * Multiply this amount of money by a floating point number
 	 */
 	MonetaryAmount times(double d);
 
+	
 }
