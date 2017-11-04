@@ -10,6 +10,8 @@ import cfs.supermarketpricing.basket.ShoppingBasket;
 import cfs.supermarketpricing.basket.SimpleShoppingBasket;
 import cfs.supermarketpricing.basket.SimpleShoppingBasketItem;
 import cfs.supermarketpricing.basket.SimpleShoppingBasketItemWithWeight;
+import cfs.supermarketpricing.discounts.DiscountsCalculator;
+import cfs.supermarketpricing.discounts.SimpleDiscountsCalculator;
 import cfs.supermarketpricing.money.MoneySystem;
 import cfs.supermarketpricing.money.SterlingAmount;
 import cfs.supermarketpricing.money.SterlingMoneySystem;
@@ -47,9 +49,12 @@ public class CheckoutTest {
 		shoppingBasket.addItem(new SimpleShoppingBasketItem(cokeCan));
 		shoppingBasket.addItem(new SimpleShoppingBasketItem(cokeCan));
 		shoppingBasket.addItem(new SimpleShoppingBasketItemWithWeight(orangesPerKilo, 0.2f));
+		// Takes care of discounts
+		// cfstodo: Needs a list of discounts somewhere
+		DiscountsCalculator discountsCalculator = new SimpleDiscountsCalculator();
 		
 		// Perform a checkout
-		CheckoutResult result = new CheckoutCalculator(shoppingBasket).executeCheckout();
+		CheckoutResult result = new CheckoutCalculator(shoppingBasket, discountsCalculator).executeCheckout();
 		
 		// Assertions
 		assertThat("Check sub total", result.getSubTotal(), is(sterling.createFromString("3.30")));

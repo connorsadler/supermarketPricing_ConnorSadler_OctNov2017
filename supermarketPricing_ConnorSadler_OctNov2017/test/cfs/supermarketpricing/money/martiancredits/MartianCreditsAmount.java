@@ -8,6 +8,7 @@ import cfs.supermarketpricing.money.MonetaryAmount;
  * MartianCreditsAmount
  * 
  * A test alternate MoneySystem amount
+ * For testing only!
  * 
  * @author Connor
  */

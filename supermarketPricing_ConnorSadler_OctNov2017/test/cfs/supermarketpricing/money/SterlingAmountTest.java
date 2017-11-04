@@ -49,10 +49,18 @@ public class SterlingAmountTest {
 				is(new SterlingAmount(1,  56)));
 		assertThat(new SterlingAmount(0,   0).plus(new SterlingAmount(1, 41)),
 				is(new SterlingAmount(1,  41)));
+
+		// Test non zeros
+		assertThat(new SterlingAmount(3,  50).plus(new SterlingAmount(11, 41)),
+				is(new SterlingAmount(14, 91)));
 		
 		// Overflow pence > 100, which overflows into another pound
 		assertThat(new SterlingAmount(1, 99).plus(new SterlingAmount(1, 99)),
 				is(new SterlingAmount(3, 98)));
+		
+		// Test negative amount added
+		assertThat(new SterlingAmount(1,  56).plus(new SterlingAmount(0, -90)),
+				is(new SterlingAmount(0,  66)));
 	}
 
 	/**

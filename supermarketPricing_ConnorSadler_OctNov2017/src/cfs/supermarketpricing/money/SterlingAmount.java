@@ -96,6 +96,10 @@ public class SterlingAmount implements MonetaryAmount {
 			newPounds++;
 			newPence -= 100;
 		}
+		if (newPence < 0) {
+			newPounds--;
+			newPence += 100;
+		}
 		return new SterlingAmount(newPounds, newPence);
 	}
 	

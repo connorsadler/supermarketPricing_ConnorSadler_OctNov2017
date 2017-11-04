@@ -5,6 +5,8 @@ import java.util.List;
 
 import cfs.supermarketpricing.basket.ShoppingBasket;
 import cfs.supermarketpricing.basket.ShoppingBasketItem;
+import cfs.supermarketpricing.discounts.DiscountsCalculator;
+import cfs.supermarketpricing.discounts.DiscountsCalculationResult;
 import cfs.supermarketpricing.money.MonetaryAmount;
 import cfs.supermarketpricing.money.MoneySystem;
 
@@ -17,12 +19,14 @@ import cfs.supermarketpricing.money.MoneySystem;
  */
 public class CheckoutCalculator {
 	private ShoppingBasket shoppingBasket;
+	private DiscountsCalculator discountCalculator;
 
 	/**
 	 * Constructor
 	 */
-	public CheckoutCalculator(ShoppingBasket shoppingBasket) {
+	public CheckoutCalculator(ShoppingBasket shoppingBasket, DiscountsCalculator discountCalculator) {
 		this.shoppingBasket = shoppingBasket;
+		this.discountCalculator = discountCalculator;
 	}
 
 	/**
@@ -43,9 +47,10 @@ public class CheckoutCalculator {
 		}
 				
 		// cfstodo: Apply any offers/discounts
+		DiscountsCalculationResult discountsCalculationResult = discountCalculator.executeDiscountsCalculation(shoppingBasket);
 		//          We need to work out from the basket which offers are applicable, then apply them
 		//          The applied offers need to be stored in the result
-		MonetaryAmount totalToPay = subtotal;
+		MonetaryAmount totalToPay = subtotal.plus(discountsCalculationResult.getDiscountTotal());
 		
 		// Create result
 		CheckoutResult result = new CheckoutResult(subtotal, totalToPay);
