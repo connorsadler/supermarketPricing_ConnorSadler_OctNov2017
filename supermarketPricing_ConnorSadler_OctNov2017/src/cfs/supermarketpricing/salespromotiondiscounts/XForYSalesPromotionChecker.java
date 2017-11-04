@@ -16,7 +16,6 @@ import cfs.supermarketpricing.sku.StockKeepingUnit;
  * @author Connor
  */
 public class XForYSalesPromotionChecker implements SalesPromotionChecker {
-
 	private XForYSalesPromotion xForYSalesPromotion;
 
 	/**

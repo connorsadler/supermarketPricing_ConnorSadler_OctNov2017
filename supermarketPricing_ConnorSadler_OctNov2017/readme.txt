@@ -5,14 +5,11 @@ Supermarket Pricing Project - By Connor Sadler, November 2017
 My initials are "CFS" so all the code is in package "cfs.supermarketpricing" and sub-packages of that. 
 
 
-
 *************
 ** WARNING **
 *************
 This is a work in progress and doesn't work quite yet
 Please bear with me!
-
-
 
 
 MonetaryAmount / MoneySystem
@@ -29,8 +26,10 @@ ShoppingBasket/ShoppingBasketItem
 Pricing Calculation
 - Done in CheckoutCalculator, please see comments in that class
 
-Offers
-- cfstodo: notes
+SalesPromotions and Discounts
+- A SalesPromotion is the offer itself
+- A Discount is a deduction because a SalesPromotion has been applied
+- See comments in appropriate class files
 
 Catalog
 - cfstodo: notes - not sure if I need this yet
