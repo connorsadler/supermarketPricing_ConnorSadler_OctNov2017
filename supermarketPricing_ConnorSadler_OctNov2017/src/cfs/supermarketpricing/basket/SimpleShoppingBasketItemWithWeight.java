@@ -2,6 +2,7 @@ package cfs.supermarketpricing.basket;
 
 import cfs.supermarketpricing.money.MonetaryAmount;
 import cfs.supermarketpricing.sku.StockKeepingUnit;
+import cfs.supermarketpricing.util.HasWeight;
 
 /**
  * SimpleShoppingBasketItemWithWeight
@@ -10,7 +11,8 @@ import cfs.supermarketpricing.sku.StockKeepingUnit;
  * 
  * @author Connor
  */
-public class SimpleShoppingBasketItemWithWeight extends SimpleShoppingBasketItem implements ShoppingBasketItemWithWeight {
+public class SimpleShoppingBasketItemWithWeight extends SimpleShoppingBasketItem implements HasWeight 
+{
 
 	private double weight;
 
@@ -22,10 +24,6 @@ public class SimpleShoppingBasketItemWithWeight extends SimpleShoppingBasketItem
 		this.weight = weight;
 	}
 	
-	/**
-	 * @see cfs.supermarketpricing.basket.ShoppingBasketItemWithWeight#getWeight()
-	 */
-	@Override
 	public double getWeight() {
 		return weight;
 	}
