@@ -55,8 +55,8 @@ public class CheckoutTest {
 		
 		// Setup available sales promotions
 		SimpleSalesPromotionRepository salesPromotionRepository = new SimpleSalesPromotionRepository();
-		salesPromotionRepository.addDiscount(new XForYSalesPromotion(beans300gTin, 3, 2));
-		salesPromotionRepository.addDiscount(new XForFixedAmountSalesPromotion(cokeCan, 2, sterling.createFromString("1")));
+		salesPromotionRepository.addSalesPromotion(new XForYSalesPromotion(beans300gTin, 3, 2));
+		salesPromotionRepository.addSalesPromotion(new XForFixedAmountSalesPromotion(cokeCan, 2, sterling.createFromString("1")));
 		DiscountsCalculator discountsCalculator = new SimpleDiscountsCalculator(salesPromotionRepository);
 		
 		// Perform a checkout

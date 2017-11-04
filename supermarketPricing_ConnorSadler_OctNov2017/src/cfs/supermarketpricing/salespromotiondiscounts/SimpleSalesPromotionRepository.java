@@ -5,15 +5,15 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * SimpleDiscountRepository
+ * SimpleSalesPromotionRepository
  * 
- * Simple in-memory list of Discount instances
+ * Simple in-memory list of SalesPromotion instances
  * 
  * @author Connor
  */
 public class SimpleSalesPromotionRepository implements SalesPromotionRepository {
 	
-	private final List<SalesPromotion> discounts = new ArrayList<>();
+	private final List<SalesPromotion> salesPromotions = new ArrayList<>();
 			
 	
 	public SimpleSalesPromotionRepository() {
@@ -24,11 +24,11 @@ public class SimpleSalesPromotionRepository implements SalesPromotionRepository 
 	 */
 	@Override
 	public List<SalesPromotion> getSalesPromotions() {
-		return Collections.unmodifiableList(discounts);
+		return Collections.unmodifiableList(salesPromotions);
 	}
 	
-	public void addDiscount(SalesPromotion d) {
-		discounts.add(d);
+	public void addSalesPromotion(SalesPromotion d) {
+		salesPromotions.add(d);
 	}
 
 }
