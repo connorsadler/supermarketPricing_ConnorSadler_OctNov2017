@@ -1,6 +1,6 @@
 package cfs.supermarketpricing.checkout;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
@@ -40,10 +40,12 @@ public class CheckoutTest {
 	}
 
 	/**
-	 * testCheckout1
+	 * testCheckout1_scenarioFromRequirementsDocument
+	 * 
+	 * Test the scenario from: Developer-Test - Supermarket-v2.txt
 	 */
 	@Test
-	public void testCheckout1() {
+	public void testCheckout1_scenarioFromRequirementsDocument() {
 		// Create our basket of items
 		ShoppingBasket shoppingBasket = new SimpleShoppingBasket(sterling);
 		shoppingBasket.addItem(new SimpleShoppingBasketItem(beans300gTin));
@@ -66,6 +68,32 @@ public class CheckoutTest {
 		assertThat("Check sub total", result.getSubTotal(), is(sterling.createFromString("3.30")));
 		// This is now correct as I have implemented SalesPromotions and Discounts
 		assertThat("Check total to pay", result.getTotalToPay(), is(sterling.createFromString("2.40")));
+	}
+	
+	/**
+	 * testCheckout2_multipleSalesPromotionsForSameItem
+	 */
+	@Test
+	public void testCheckout2_multipleSalesPromotionsForSameItem() {
+		// Create our basket of items
+		ShoppingBasket shoppingBasket = new SimpleShoppingBasket(sterling);
+		for (int i=0; i < 6; i++) {
+			shoppingBasket.addItem(new SimpleShoppingBasketItem(beans300gTin));
+		}
+		
+		// Setup available sales promotions
+		SimpleSalesPromotionRepository salesPromotionRepository = new SimpleSalesPromotionRepository();
+		salesPromotionRepository.addSalesPromotion(new XForYSalesPromotion(beans300gTin, 2, 1));
+		salesPromotionRepository.addSalesPromotion(new XForYSalesPromotion(beans300gTin, 3, 2));
+		DiscountsCalculator discountsCalculator = new SimpleDiscountsCalculator(salesPromotionRepository);
+		
+		// Perform a checkout
+		CheckoutResult result = new CheckoutCalculator(shoppingBasket, discountsCalculator).executeCheckout();
+		
+		// Assertions
+		assertThat("Check sub total", result.getSubTotal(), is(sterling.createFromString("3.00")));
+		// This is now correct as I have implemented SalesPromotions and Discounts
+		assertThat("Check total to pay", result.getTotalToPay(), is(sterling.createFromString("0.50")));
 	}
 
 }

@@ -94,6 +94,32 @@ public class XForYSalesPromotionTest {
 	}
 	
 	/**
+	 * test_3For2_appliesOnce_basketOrderNotImportant
+	 * 
+	 * We just bought enough beans to trigger the promotion
+	 * There are coke cans inbetween the beans in the basket which should not affect the promotion being triggered
+	 */
+	@Test
+	public void test_3For2_appliesOnce_basketOrderNotImportant() {
+		// Create our basket of items
+		ShoppingBasket shoppingBasket = new SimpleShoppingBasket(sterling);
+		shoppingBasket.addItem(new SimpleShoppingBasketItem(beans300gTin));		
+		shoppingBasket.addItem(new SimpleShoppingBasketItem(cokeCan));
+		shoppingBasket.addItem(new SimpleShoppingBasketItem(beans300gTin));
+		shoppingBasket.addItem(new SimpleShoppingBasketItem(cokeCan));
+		shoppingBasket.addItem(new SimpleShoppingBasketItem(beans300gTin));
+		
+		// Run test
+		SalesPromotion salesPromotion = new XForYSalesPromotion(beans300gTin, 3, 2);
+		XForYSalesPromotionChecker checker = (XForYSalesPromotionChecker) salesPromotion.getSalesPromotionChecker();
+		DiscountList result = checker.executeCheck(shoppingBasket);
+		
+		// Assertions
+		assertThat(result.getSize(), is(1));
+		assertThat(result.getTotalDiscount(), is(sterling.createFromString("-0.50")));
+	}
+	
+	/**
 	 * test_3For2_appliesThreeTimes
 	 * 
 	 * Test "3 for 2" applies three times
@@ -179,4 +205,17 @@ public class XForYSalesPromotionTest {
 		assertThat(result.getSize(), is(2));
 		assertThat(result.getTotalDiscount(), is(sterling.createFromString("-1.00")));
 	}
+	
+	/**
+	 * testMultipleSalesPromotionsForSameItem
+	 * 
+	 * We have a "3 for 2" and a "2 for 1" running at the same time
+	 * The checker deals with a single SalesPromotion so this test is in CheckoutTest.testCheckout2_multipleSalesPromotionsForSameItem
+	 */
+	@Test
+	public void testMultipleSalesPromotionsForSameItem() {
+	}
+	
+	
+	
 }

@@ -4,13 +4,15 @@ Supermarket Pricing Project - By Connor Sadler, November 2017
 
 My initials are "CFS" so all the code is in package "cfs.supermarketpricing" and sub-packages of that. 
 
+This code now works.
+There are various test cases in the "test" folder.
+The main test for the scenario in the txt file is:
+	CheckoutTest.testCheckout1_scenarioFromRequirementsDocument
 
-*************
-** WARNING **
-*************
-This is a work in progress and doesn't work quite yet
-Please bear with me!
-
+Details
+-------
+Here's some notes about the classes I've created.
+I've tried to comment each class/interface also, so please check the .java file comments also.
 
 MonetaryAmount / MoneySystem
 - An amount of money
@@ -30,10 +32,20 @@ SalesPromotions and Discounts
 - A SalesPromotion is the offer itself
 - A Discount is a deduction because a SalesPromotion has been applied
 - See comments in appropriate class files
+- There are some tests here:
+   XForYSalesPromotionTest
+   XForFixedAmountSalesPromotionTest
+
+Note: At present a basket item can count for two or more sales promotions.
+      This may not be what is required so could be changed in future.
+      This wouldn't be ideal if there was a "3 for 2" and a "2 for 1" running at the same time!
+      See XForYSalesPromotionTest.testMultipleSalesPromotionsForSameItem
+      To change this, we could keep track of which ShoppingBasketItem has been used when checking
+      a SalesPromotion, and only use it once, or otherwise restrict it's use across multiple promotions.
+    
 
 Catalog
-- cfstodo: notes - not sure if I need this yet
-
+- for future enhancement, I didn't need this for the moment
 
 Inventory
 - for future enhancement, please see code comments
