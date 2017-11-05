@@ -9,16 +9,10 @@ import org.junit.Test;
 import cfs.supermarketpricing.basket.ShoppingBasket;
 import cfs.supermarketpricing.basket.SimpleShoppingBasket;
 import cfs.supermarketpricing.basket.SimpleShoppingBasketItem;
-import cfs.supermarketpricing.basket.SimpleShoppingBasketItemWithWeight;
 import cfs.supermarketpricing.discounts.DiscountsCalculationResult;
-import cfs.supermarketpricing.discounts.DiscountsCalculator;
 import cfs.supermarketpricing.money.MoneySystem;
 import cfs.supermarketpricing.money.SterlingAmount;
 import cfs.supermarketpricing.money.SterlingMoneySystem;
-import cfs.supermarketpricing.salespromotiondiscounts.SimpleDiscountsCalculator;
-import cfs.supermarketpricing.salespromotiondiscounts.SimpleSalesPromotionRepository;
-import cfs.supermarketpricing.salespromotiondiscounts.XForFixedAmountSalesPromotion;
-import cfs.supermarketpricing.salespromotiondiscounts.XForYSalesPromotion;
 import cfs.supermarketpricing.sku.SimpleStockKeepingUnit;
 import cfs.supermarketpricing.sku.StockKeepingUnit;
 
