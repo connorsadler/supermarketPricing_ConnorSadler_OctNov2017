@@ -105,7 +105,7 @@ public class CheckoutCalculatorTest {
 		
 		// Assertions
 		assertThat("Check sub total", result.getSubTotal(), is(sterling.createFromString("3.00")));
-		// This is now correct as I have implemented SalesPromotions and Discounts
+		// This is quite a small final bill - see method comments
 		assertThat("Check total to pay", result.getTotalToPay(), is(sterling.createFromString("0.50")));
 	}
 
