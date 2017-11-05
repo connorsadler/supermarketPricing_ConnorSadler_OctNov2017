@@ -1,6 +1,5 @@
 package cfs.supermarketpricing.salespromotiondiscounts;
 
-import java.util.Collections;
 import java.util.List;
 
 import cfs.supermarketpricing.discounts.DiscountsCalculationResult;
@@ -14,16 +13,13 @@ import cfs.supermarketpricing.money.MonetaryAmount;
 public class SimpleDiscountsCalculationResult implements DiscountsCalculationResult {
 
 	// All discounts applied
-	private List<Discount> allDiscountsApplied;
-	// This will be a negative figure if the customer is saving money, which is usually the case
-	private MonetaryAmount discountTotal;
+	private DiscountList allDiscountsApplied;
 
 	/**
 	 * Constructor
 	 */
-	public SimpleDiscountsCalculationResult(List<Discount> allDiscountsApplied, MonetaryAmount discountTotal) {
+	public SimpleDiscountsCalculationResult(DiscountList allDiscountsApplied) {
 		this.allDiscountsApplied = allDiscountsApplied;
-		this.discountTotal = discountTotal;
 	}
 
 	/**
@@ -31,13 +27,13 @@ public class SimpleDiscountsCalculationResult implements DiscountsCalculationRes
 	 */
 	@Override
 	public MonetaryAmount getDiscountTotal() {
-		return discountTotal;
+		return allDiscountsApplied.getTotalDiscount();
 	}
 
 	/**
 	 * @see cfs.supermarketpricing.discounts.DiscountsCalculationResult#getAllDiscountsApplied()
 	 */
 	public List<Discount> getAllDiscountsApplied() {
-		return Collections.unmodifiableList(allDiscountsApplied);
+		return allDiscountsApplied.getDiscounts();
 	}
 }

@@ -29,7 +29,7 @@ public class XForFixedAmountSalesPromotionChecker implements SalesPromotionCheck
 	 * @see cfs.supermarketpricing.salespromotiondiscounts.SalesPromotionChecker#executeCheck(cfs.supermarketpricing.basket.ShoppingBasket)
 	 */
 	@Override
-	public List<Discount> executeCheck(ShoppingBasket shoppingBasket) {
+	public DiscountList executeCheck(ShoppingBasket shoppingBasket) {
 		List<Discount> result = new ArrayList<>();
 		StockKeepingUnit stockKeepingUnit = xForFixedAmountSalesPromotion.getStockKeepingUnit();
 		List<ShoppingBasketItem> basketItemsForSalesPromotionSKU = getItemsForStockKeepingUnit(shoppingBasket, stockKeepingUnit);
@@ -48,7 +48,7 @@ public class XForFixedAmountSalesPromotionChecker implements SalesPromotionCheck
 				}
 			}
 		}
-		return result;
+		return new SimpleDiscountList(shoppingBasket.getMoneySystem(), result);
 	}
 
 }

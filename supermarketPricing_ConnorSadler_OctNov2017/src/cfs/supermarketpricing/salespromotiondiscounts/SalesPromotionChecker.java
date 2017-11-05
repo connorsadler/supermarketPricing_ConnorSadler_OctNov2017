@@ -10,7 +10,8 @@ import cfs.supermarketpricing.sku.StockKeepingUnit;
 /**
  * SalesPromotionChecker
  * 
- * Works to figure out 
+ * Works alongside a SalesPromotion to check if it's applicable for a given ShoppingBasket
+ * I pulled this logic out of SalesPromotion itself to keep it cleaner
  * 
  * @author Connor
  */
@@ -19,10 +20,10 @@ public interface SalesPromotionChecker {
 	/**
 	 * getItemsForStockKeepingUnit
 	 * 
-	 * Returns only the items from the basket with the specified StockKeepingUnit
+	 * Convenience method for SalesPromotionCheckers which need access to
+	 * only the items from the basket with their specific StockKeepingUnit
 	 */
 	public default List<ShoppingBasketItem> getItemsForStockKeepingUnit(ShoppingBasket shoppingBasket, StockKeepingUnit stockKeepingUnit) {
-		// Filter basket to get all items of the promotion's SKU
 		return shoppingBasket.getItems()
 			   .stream()
 			   .filter(sbi -> sbi.getStockKeepingUnit().equals(stockKeepingUnit))
@@ -35,6 +36,6 @@ public interface SalesPromotionChecker {
 	 * 
 	 * Should return the list of Discounts (if any) that apply to the specified basket for the SalesPromotion we're checking
 	 */
-	List<Discount> executeCheck(ShoppingBasket shoppingBasket);
+	DiscountList executeCheck(ShoppingBasket shoppingBasket);
 
 }
