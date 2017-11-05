@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cfs.supermarketpricing.basket.ShoppingBasket;
+import cfs.supermarketpricing.basket.ShoppingBasketItem;
 import cfs.supermarketpricing.basket.SimpleShoppingBasket;
 import cfs.supermarketpricing.basket.SimpleShoppingBasketItem;
 import cfs.supermarketpricing.basket.SimpleShoppingBasketItemWithWeight;
@@ -14,6 +15,7 @@ import cfs.supermarketpricing.discounts.DiscountsCalculator;
 import cfs.supermarketpricing.money.MoneySystem;
 import cfs.supermarketpricing.money.SterlingAmount;
 import cfs.supermarketpricing.money.SterlingMoneySystem;
+import cfs.supermarketpricing.salespromotiondiscounts.Discount;
 import cfs.supermarketpricing.salespromotiondiscounts.SimpleDiscountsCalculator;
 import cfs.supermarketpricing.salespromotiondiscounts.SimpleSalesPromotionRepository;
 import cfs.supermarketpricing.salespromotiondiscounts.XForFixedAmountSalesPromotion;
@@ -47,6 +49,35 @@ public class CheckoutCalculatorTest {
 	}
 
 	/**
+	 * logResult
+	 * 
+	 * This is to aid the developer if problems happen
+	 * We dump out the basket and CheckoutResult
+	 */
+	private void logResult(ShoppingBasket shoppingBasket, CheckoutResult result) {
+		System.out.println(">>> logResult");
+
+		System.out.println("---");
+		System.out.println("Shopping basket:");
+		for (ShoppingBasketItem item : shoppingBasket.getItems()) {
+			System.out.println("  item: " + item);
+		}
+		System.out.println("---");
+		System.out.println("Sub Total: " + result.getSubTotal());
+		System.out.println("---");
+		System.out.println("Discounts:");
+		for (Discount discount : result.getDiscountsCalculationResult().getAllDiscountsApplied()) {
+			System.out.println("  discount: " + discount);
+		}
+		System.out.println("Total Savings: " +  result.getDiscountsCalculationResult().getDiscountTotal());
+		System.out.println("---");
+		System.out.println("Total to Pay: " + result.getTotalToPay());
+		System.out.println("---");
+		
+		System.out.println("<<< logResult");
+	}
+	
+	/**
 	 * testCheckout1_scenarioFromRequirementsDocument
 	 * 
 	 * Test the scenario from: Developer-Test - Supermarket-v2.txt
@@ -70,6 +101,7 @@ public class CheckoutCalculatorTest {
 		
 		// Perform a checkout
 		CheckoutResult result = new CheckoutCalculator(shoppingBasket, discountsCalculator).executeCheckout();
+		logResult(shoppingBasket, result);
 		
 		// Assertions
 		assertThat("Check sub total", result.getSubTotal(), is(sterling.createFromString("3.30")));
@@ -102,6 +134,7 @@ public class CheckoutCalculatorTest {
 		
 		// Perform a checkout
 		CheckoutResult result = new CheckoutCalculator(shoppingBasket, discountsCalculator).executeCheckout();
+		logResult(shoppingBasket, result);
 		
 		// Assertions
 		assertThat("Check sub total", result.getSubTotal(), is(sterling.createFromString("3.00")));

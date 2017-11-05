@@ -49,7 +49,7 @@ public class CheckoutCalculator {
 		MonetaryAmount totalToPay = subtotal.plus(discountsCalculationResult.getDiscountTotal());
 		
 		// Create result
-		CheckoutResult result = new CheckoutResult(subtotal, totalToPay);
+		CheckoutResult result = new CheckoutResult(subtotal, totalToPay, discountsCalculationResult);
 		return result;
 	}
 }

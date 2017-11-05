@@ -1,5 +1,6 @@
 package cfs.supermarketpricing.checkout;
 
+import cfs.supermarketpricing.discounts.DiscountsCalculationResult;
 import cfs.supermarketpricing.money.MonetaryAmount;
 
 /**
@@ -12,13 +13,16 @@ public class CheckoutResult {
 	private final MonetaryAmount subtotal;
 	// Final total after discounts applied
 	private final MonetaryAmount totalToPay;
+	// Any discounts applied
+	private DiscountsCalculationResult discountsCalculationResult;
 
 	/**
 	 * Constructor
 	 */
-	public CheckoutResult(MonetaryAmount subtotal, MonetaryAmount totalToPay) {
+	public CheckoutResult(MonetaryAmount subtotal, MonetaryAmount totalToPay, DiscountsCalculationResult discountsCalculationResult) {
 		this.subtotal = subtotal;
 		this.totalToPay = totalToPay;
+		this.discountsCalculationResult = discountsCalculationResult;
 	}
 
 	/**
@@ -33,6 +37,13 @@ public class CheckoutResult {
 	 */
 	public MonetaryAmount getTotalToPay() {
 		return totalToPay;
+	}
+	
+	/**
+	 * getDiscountsCalculationResult
+	 */
+	public DiscountsCalculationResult getDiscountsCalculationResult() {
+		return discountsCalculationResult;
 	}
 
 }

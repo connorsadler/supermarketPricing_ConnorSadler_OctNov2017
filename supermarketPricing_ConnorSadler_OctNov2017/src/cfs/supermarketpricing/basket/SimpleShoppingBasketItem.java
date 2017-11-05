@@ -29,7 +29,11 @@ public class SimpleShoppingBasketItem implements ShoppingBasketItem {
 	 */
 	@Override
 	public MonetaryAmount calcAmount() {
-		// cfstodo: Do this properly for SKUs which require a weight!
 		return stockKeepingUnit.getPrice();
+	}
+
+	@Override
+	public String toString() {
+		return "SimpleShoppingBasketItem [stockKeepingUnit=" + stockKeepingUnit + "]";
 	}
 }

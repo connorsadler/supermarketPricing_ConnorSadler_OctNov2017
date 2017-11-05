@@ -9,6 +9,9 @@ There are various test cases in the "test" folder.
 The main test for the scenario in the txt file is:
 	CheckoutCalculatorTest.testCheckout1_scenarioFromRequirementsDocument
 
+The CheckoutCalculatorTest now outputs a Checkout summary to the console to give developers more information.
+This shows the information is there to produce a receipt, which could be done in future.
+
 Details
 -------
 Here's some notes about the classes I've created.
