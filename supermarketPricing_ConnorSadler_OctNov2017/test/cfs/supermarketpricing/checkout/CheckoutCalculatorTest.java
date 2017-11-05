@@ -21,7 +21,14 @@ import cfs.supermarketpricing.salespromotiondiscounts.XForYSalesPromotion;
 import cfs.supermarketpricing.sku.SimpleStockKeepingUnit;
 import cfs.supermarketpricing.sku.StockKeepingUnit;
 
-public class CheckoutTest {
+/**
+ * CheckoutCalculatorTest
+ * 
+ * Test for CheckoutCalculator
+ * 
+ * @author Connor
+ */
+public class CheckoutCalculatorTest {
 	// Fixtures
 	// We're going to work in Sterling for this test
 	private final MoneySystem<SterlingAmount> sterling = new SterlingMoneySystem();
@@ -72,6 +79,12 @@ public class CheckoutTest {
 	
 	/**
 	 * testCheckout2_multipleSalesPromotionsForSameItem
+	 * 
+	 * We have a "3 for 2" and a "2 for 1" on beans, running at the same time
+	 * The shopper buys 6 tins of beans
+	 * This triggers the "3 for 2" twice, and the "2 for 1" three times 
+	 * So they pay very little
+	 * This may need addressing in future
 	 */
 	@Test
 	public void testCheckout2_multipleSalesPromotionsForSameItem() {

@@ -7,7 +7,7 @@ My initials are "CFS" so all the code is in package "cfs.supermarketpricing" and
 This code now works.
 There are various test cases in the "test" folder.
 The main test for the scenario in the txt file is:
-	CheckoutTest.testCheckout1_scenarioFromRequirementsDocument
+	CheckoutCalculatorTest.testCheckout1_scenarioFromRequirementsDocument
 
 Details
 -------

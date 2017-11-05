@@ -210,7 +210,7 @@ public class XForYSalesPromotionTest {
 	 * testMultipleSalesPromotionsForSameItem
 	 * 
 	 * We have a "3 for 2" and a "2 for 1" running at the same time
-	 * The checker deals with a single SalesPromotion so this test is in CheckoutTest.testCheckout2_multipleSalesPromotionsForSameItem
+	 * The checker deals with a single SalesPromotion so this test is in CheckoutCalculatorTest.testCheckout2_multipleSalesPromotionsForSameItem
 	 */
 	@Test
 	public void testMultipleSalesPromotionsForSameItem() {
