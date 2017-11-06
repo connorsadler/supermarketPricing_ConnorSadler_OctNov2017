@@ -22,6 +22,10 @@ i.e. the directory which contains build.gradle
 Please then run the command:
 	gradlew build test
 
+This will create a report file in this directory:
+	(project root)/build/reports/tests/test/index.html
+
+
 Details
 -------
 Here's some notes about the classes I've created.
