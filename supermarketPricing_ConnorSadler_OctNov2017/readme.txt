@@ -16,9 +16,11 @@ This shows the information is there to produce a receipt, which could be done in
 Running the tests
 -----------------
 I've now added the gradle wrapper to this project.
-You can build the code and run the tests with this command:
+You can build the code and run the tests with gradle.
+You'll need a command prompt open and cd to the project root directory
+i.e. the directory which contains build.gradle
+Please then run the command:
 	gradlew build test
-
 
 Details
 -------
