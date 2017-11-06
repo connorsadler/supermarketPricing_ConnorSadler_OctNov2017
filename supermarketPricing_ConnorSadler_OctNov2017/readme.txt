@@ -12,6 +12,14 @@ The main test for the scenario in the txt file is:
 The CheckoutCalculatorTest now outputs a Checkout summary to the console to give developers more information.
 This shows the information is there to produce a receipt, which could be done in future.
 
+
+Running the tests
+-----------------
+I've now added the gradle wrapper to this project.
+You can build the code and run the tests with this command:
+	gradlew build test
+
+
 Details
 -------
 Here's some notes about the classes I've created.

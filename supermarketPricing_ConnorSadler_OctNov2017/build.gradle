@@ -1,0 +1,16 @@
+
+apply plugin: 'java'
+
+// override defaults to use src and test directories
+sourceSets.main.java.srcDirs = ['src']
+sourceSets.main.resources.srcDirs = ['src']
+sourceSets.test.java.srcDirs = ['test']
+sourceSets.test.resources.srcDirs = ['test']
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12' 
+}
